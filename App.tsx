@@ -9,9 +9,9 @@ import React from 'react';
 import { Button, View, Text, SafeAreaView } from 'react-native';
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react-native';
 import { Amplify } from 'aws-amplify';
-import config from './aws-exports';
+import awsConfig from './aws-exports';
 
-Amplify.configure(config);
+Amplify.configure(awsConfig);
 
 function SignOutButton() {
   const { signOut } = useAuthenticator();
