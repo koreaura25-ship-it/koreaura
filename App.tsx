@@ -5,41 +5,34 @@
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import React from 'react';
+import { Button, View, Text, SafeAreaView } from 'react-native';
+import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react-native';
+import { Amplify } from 'aws-amplify';
+import config from './aws-exports';
+
+Amplify.configure(config);
+
+function SignOutButton() {
+  const { signOut } = useAuthenticator();
+  return <Button title="Sign Out" onPress={signOut} />;
+}
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <Authenticator.Provider>
+      <Authenticator>
+        <SafeAreaView>
+        <View>
+          <Text>Hello</Text>
+          <SignOutButton />
+        </View>
+        </SafeAreaView>
+
+        
+      </Authenticator>
+    </Authenticator.Provider>
   );
 }
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default App;
